@@ -22,7 +22,6 @@ async function getData() {
 }
 
 async function init() {
-
     let nodesArr = await getData();
     const $ = go.GraphObject.make; 
 
