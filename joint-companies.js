@@ -17,7 +17,7 @@ go.Shape.defineFigureGenerator("CollapsedLine", (shape, w, h) => {
 async function getData() {
 	let url = 'http://192.168.14.33/otcs/llisapi.dll?func=ll&objId=100768&objAction=RunReport';
     let result = await fetch(url);
-	let data = result.json();
+	let data = await result.json();
 	return data.result;
 }
 
