@@ -2245,12 +2245,12 @@ function init() {
 function imageConverter(prop, picture) {
     var node = picture.part;
     if (node.isTreeLeaf) {
-        return "images/document.svg";
+        return window.images.documentSvg;
     } else {
         if (node.isTreeExpanded) {
-            return "images/openFolder.svg";
+            return window.images.openFolder;
         } else {
-            return "images/closedFolder.svg";
+            return window.images.closedFolder;
         }
     }
 }
