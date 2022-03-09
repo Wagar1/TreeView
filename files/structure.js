@@ -1,8 +1,15 @@
 function init() {
     var chart;
-    d3.csv(
-        'https://raw.githubusercontent.com/farid099/plane/master/data.csv'
+    d3.json(
+        'http://192.168.14.33/otcs/llisapi.dll?func=ll&objId=99071&objAction=RunReport'
     ).then((dataFlattened) => {
+        dataFlattened = dataFlattened.map(x=>{
+            if(x.parentId === '?') {
+                x.parentId = '';             
+            }
+            return x;
+        });
+        dataFlattened.pop();
         chart = new d3.OrgChart()
             .container('.chart-container')
             .data(dataFlattened)
