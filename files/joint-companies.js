@@ -15,14 +15,34 @@ go.Shape.defineFigureGenerator("CollapsedLine", (shape, w, h) => {
 });
 
 async function getData() {
-	let url = 'http://192.168.14.33/otcs/llisapi.dll?func=ll&objId=100768&objAction=RunReport';
+	let url = 'http://192.168.14.33/otcs/llisapi.dll?func=ll&objId=97419&objAction=RunReport';
     let result = await fetch(url);
 	let data = await result.json();
-	return data.result;
+    data.result.pop();
+    var group = _.groupBy(data.result, 'key');
+    group = _.map(group, x=>{
+        if(x.length > 1){
+           let res = _.reduce(x, (pr, cv)=>{
+                   pr.dataPoints.push({y: cv.y, label: cv.label}); 
+                   return pr;        
+           }, {
+            key: x[0].key,
+            text: x[0].text,
+            color: x[0].color,
+            share: x[0].share,
+            parent: x[0].parent,
+            dataPoints: []
+        })
+           return res;
+        }
+        else return x;
+    });
+	return _.flatMap(group);
 }
 
 async function init() {
     let nodesArr = await getData();
+    console.log(nodesArr);
     const $ = go.GraphObject.make; 
 
     myDiagram =
